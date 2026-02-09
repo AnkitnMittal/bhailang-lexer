@@ -59,6 +59,12 @@ STRING          \"([^"\n]*)\"
 {STRING}            { printf("STRING\n"); }
 {DIGIT}+            { printf("NUMBER\n"); }
 {ID}                { printf("IDENTIFIER\n"); }
+
+" ========== IGNORE WHITESPACE ========== "
+[ \t\n]+            { }
+
+" ========== INVALID CHARACTERS ========== "
+.                   { printf("UNKNOWN: %s\n", yytext); }
 %%
 
 int yywrap(){
