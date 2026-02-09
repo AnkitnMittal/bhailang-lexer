@@ -18,18 +18,29 @@ STRING          \"([^"\n]*)\"
 
 "jab tak bhai"      { printf("WHILE\n"); }
 "agar bhai"         { printf("IF\n"); }
-"nahi to bhai"      { printf("ELSE\n"); }
+"nahi to bhai"      { printf("ELSE_IF\n"); }
+"warna bhai"        { printf("ELSE\n"); }
 
 "agla dekh bhai"    { printf("CONTINUE\n"); }
 "bas kar bhai"      { printf("BREAK\n"); }
 
+/* ========== FIXED TYPES ========== */
+"nalla"             { printf("NULL\n"); }
+"sahi"              { printf("TRUE\n"); }
+"galat"             { printf("FALSE\n"); }
+
+
 /* ========== OPERATORS ========== */
 
-"=="                { printf("EQ\n"); }
 "+="                { printf("PLUS_EQ\n"); }
 "-="                { printf("SUB_EQ\n"); }
+"*="                { printf("MUL_EQ\n"); }
 "="                 { printf("ASSIGN\n"); }
 
+/* ========== COMPARATORS ========== */
+
+"=="                { printf("EQ\n"); }
+"!="                { printf("NOT_EQ\n"); }
 "<"                 { printf("LT\n"); }
 "<="                { printf("LT_EQ\n"); }
 ">"                 { printf("GT\n"); }
