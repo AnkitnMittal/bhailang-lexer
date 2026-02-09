@@ -35,18 +35,22 @@ STRING          \"([^"\n]*)\"
 "+="                { printf("PLUS_EQ\n"); }
 "-="                { printf("SUB_EQ\n"); }
 "*="                { printf("MUL_EQ\n"); }
-"="                 { printf("ASSIGN\n"); }
+"+"                 { printf("ADD\n"); }
+"-"                 { printf("SUB\n"); }
+"*"                 { printf("MUL\n"); }
+"/"                 { printf("DIV\n"); }
 
 /* ========== COMPARATORS ========== */
 
 "=="                { printf("EQ\n"); }
 "!="                { printf("NOT_EQ\n"); }
-"<"                 { printf("LT\n"); }
 "<="                { printf("LT_EQ\n"); }
-">"                 { printf("GT\n"); }
 ">="                { printf("GT_EQ\n"); }
+"<"                 { printf("LT\n"); }
+">"                 { printf("GT\n"); }
+"="                 { printf("ASSIGN\n"); }
 
-" ========== SYMBOLS ========== "
+/* ========== SYMBOLS ========== */
 
 "("                 { printf("LPAREN\n"); }
 ")"                 { printf("RPAREN\n"); }
@@ -54,16 +58,16 @@ STRING          \"([^"\n]*)\"
 "}"                 { printf("RBRACE\n"); }
 ";"                 { printf("SEMICOLON\n"); }
 
-" ========== SYMBOLS ========== "
+/* ========== SYMBOLS ========== */
 
 {STRING}            { printf("STRING\n"); }
 {DIGIT}+            { printf("NUMBER\n"); }
 {ID}                { printf("IDENTIFIER\n"); }
 
-" ========== IGNORE WHITESPACE ========== "
+/* ========== IGNORE WHITESPACE ========== */
 [ \t\n]+            { }
 
-" ========== INVALID CHARACTERS ========== "
+/* ========== INVALID CHARACTERS ========== */
 .                   { printf("UNKNOWN: %s\n", yytext); }
 %%
 
