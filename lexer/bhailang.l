@@ -35,6 +35,19 @@ STRING          \"([^"\n]*)\"
 ">"                 { printf("GT\n"); }
 ">="                { printf("GT_EQ\n"); }
 
+" ========== SYMBOLS ========== "
+
+"("                 { printf("LPAREN\n"); }
+")"                 { printf("RPAREN\n"); }
+"{"                 { printf("LBRACE\n"); }
+"}"                 { printf("RBRACE\n"); }
+";"                 { printf("SEMICOLON\n"); }
+
+" ========== SYMBOLS ========== "
+
+{STRING}            { printf("STRING\n"); }
+{DIGIT}+            { printf("NUMBER\n"); }
+{ID}                { printf("IDENTIFIER\n"); }
 %%
 
 int yywrap(){
