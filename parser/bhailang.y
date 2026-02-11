@@ -15,7 +15,7 @@
 %token PLUS_EQ SUB_EQ MUL_EQ DIV_EQ ADD SUB MUL DIV
 %token EQ NE LE GE LT GT ASSIGN
 %token LPAREN RPAREN LBRACE RBRACE SEMICOLON
-%token STRING DIGIT IDENTIFIER
+%token STRING DIGIT ID
 
 %%
 
@@ -35,6 +35,10 @@ statement:
     | condition
     | loop
     | expression
+    ;
+
+assignment:
+    ID ASSIGN expression
     ;
 
 varDecl:
