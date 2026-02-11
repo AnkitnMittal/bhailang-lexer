@@ -33,6 +33,7 @@ STRING  \"[^\"]*\"
 "+="                { printf("PLUS_EQ\n"); }
 "-="                { printf("SUB_EQ\n"); }
 "*="                { printf("MUL_EQ\n"); }
+"/="                { printf("DIV_EQ\n"); }
 "+"                 { printf("ADD\n"); }
 "-"                 { printf("SUB\n"); }
 "*"                 { printf("MUL\n"); }
@@ -41,9 +42,9 @@ STRING  \"[^\"]*\"
 
 
 "=="                { printf("EQ\n"); }
-"!="                { printf("NOT_EQ\n"); }
-"<="                { printf("LT_EQ\n"); }
-">="                { printf("GT_EQ\n"); }
+"!="                { printf("NE\n"); }
+"<="                { printf("LE\n"); }
+">="                { printf("GE\n"); }
 "<"                 { printf("LT\n"); }
 ">"                 { printf("GT\n"); }
 "="                 { printf("ASSIGN\n"); }
