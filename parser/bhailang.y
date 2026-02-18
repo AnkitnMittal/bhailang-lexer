@@ -13,7 +13,7 @@
 %token NALLA TRUE FALSE
 %token PLUS_EQ SUB_EQ MUL_EQ DIV_EQ ADD SUB MUL DIV
 %token EQ NE LE GE LT GT ASSIGN
-%token LPAREN RPAREN LBRACE RBRACE SEMICOLON
+%token LPAREN RPAREN LBRACE RBRACE SEMICOLON COMMA
 %token STRING DIGIT ID
 
 %left EQ NE LT GT LE GE
@@ -41,6 +41,7 @@ statement:
     | loop
     | CONTINUE SEMICOLON
     | BREAK SEMICOLON
+    | LBRACE statements RBRACE
     ;
 
 varDecl:
@@ -56,8 +57,13 @@ assignment:
     ;
 
 output:
-    PRINT expression
-    ;
+    PRINT exprList
+;
+
+exprList:
+      expression
+    | exprList COMMA expression
+;
 
 condition:
     IF LPAREN expression RPAREN LBRACE statements RBRACE elsePart
