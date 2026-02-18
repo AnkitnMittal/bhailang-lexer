@@ -1,72 +1,61 @@
 %{
     #include <stdio.h>
     #include <string.h>
+    #include "y.tab.h"
 %}
 
-DIGIT   [0-9]
+DIGIT   [0-9]+
 ID      [a-zA-Z_][a-zA-Z0-9_]*
 STRING  \"[^\"]*\"
 
 %%
-"hi bhai"           { printf("HI\n"); }
-"bye bhai"          { printf("BYE\n"); }
+"hi bhai"           { return HI; }
+"bye bhai"          { return BYE; }
 
-"bhai ye hai"       { printf("DECLARE\n"); }
-"bol bhai"          { printf("PRINT\n"); }
+"bhai ye hai"       { return DECLARE; }
+"bol bhai"          { return PRINT; }
 
-"jab tak bhai"      { printf("WHILE\n"); }
-"agar bhai"         { printf("IF\n"); }
-"nahi to bhai"      { printf("ELSE_IF\n"); }
-"warna bhai"        { printf("ELSE\n"); }
+"jab tak bhai"      { return WHILE; }
+"agar bhai"         { return IF; }
+"nahi to bhai"      { return ELSE_IF; }
+"warna bhai"        { return ELSE; }
 
-"agla dekh bhai"    { printf("CONTINUE\n"); }
-"bas kar bhai"      { printf("BREAK\n"); }
+"agla dekh bhai"    { return CONTINUE; }
+"bas kar bhai"      { return BREAK; }
 
+"nalla"             { return NULL; }
+"sahi"              { return TRUE; }
+"galat"             { return FALSE; }
 
+"+="                { return PLUS_EQ; }
+"-="                { return SUB_EQ; }
+"*="                { return MUL_EQ; }
+"/="                { return DIV_EQ; }
+"+"                 { return ADD; }
+"-"                 { return SUB; }
+"*"                 { return MUL; }
+"/"                 { return DIV; }
 
-"nalla"             { printf("NULL\n"); }
-"sahi"              { printf("TRUE\n"); }
-"galat"             { printf("FALSE\n"); }
+"=="                { return EQ; }
+"!="                { return NE; }
+"<="                { return LE; }
+">="                { return GE; }
+"<"                 { return LT; }
+">"                 { return GT; }
+"="                 { return ASSIGN; }
 
+"("                 { return LPAREN; }
+")"                 { return RPAREN; }
+"{"                 { return LBRACE; }
+"}"                 { return RBRACE; }
+";"                 { return SEMICOLON; }
 
+{STRING}            { return STRING; }
+{DIGIT}             { return DIGIT; }
+{ID}                { return ID; }
 
-"+="                { printf("PLUS_EQ\n"); }
-"-="                { printf("SUB_EQ\n"); }
-"*="                { printf("MUL_EQ\n"); }
-"/="                { printf("DIV_EQ\n"); }
-"+"                 { printf("ADD\n"); }
-"-"                 { printf("SUB\n"); }
-"*"                 { printf("MUL\n"); }
-"/"                 { printf("DIV\n"); }
-
-
-
-"=="                { printf("EQ\n"); }
-"!="                { printf("NE\n"); }
-"<="                { printf("LE\n"); }
-">="                { printf("GE\n"); }
-"<"                 { printf("LT\n"); }
-">"                 { printf("GT\n"); }
-"="                 { printf("ASSIGN\n"); }
-
-
-
-"("                 { printf("LPAREN\n"); }
-")"                 { printf("RPAREN\n"); }
-"{"                 { printf("LBRACE\n"); }
-"}"                 { printf("RBRACE\n"); }
-";"                 { printf("SEMICOLON\n"); }
-
-
-
-{STRING}            { printf("STRING\n"); }
-{DIGIT}+            { printf("NUMBER\n"); }
-{ID}                { printf("IDENTIFIER\n"); }
-
-
-
-[ \t\n]+            { }
-.                   { printf("UNKNOWN: %s\n", yytext); }
+[ \t\n]+            { /* ignore whitespace */ }
+.                   { printf("Unknown: %s\n", yytext); }
 %%
 
 int yywrap(){
