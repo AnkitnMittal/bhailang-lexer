@@ -1,7 +1,7 @@
 %{
     #include <stdio.h>
     #include <string.h>
-    #include "y.tab.h"
+    #include "../parser/bhailang.tab.h"
 %}
 
 DIGIT   [0-9]+
@@ -9,6 +9,7 @@ ID      [a-zA-Z_][a-zA-Z0-9_]*
 STRING  \"[^\"]*\"
 
 %%
+
 "hi bhai"           { return HI; }
 "bye bhai"          { return BYE; }
 
@@ -23,7 +24,7 @@ STRING  \"[^\"]*\"
 "agla dekh bhai"    { return CONTINUE; }
 "bas kar bhai"      { return BREAK; }
 
-"nalla"             { return NULL; }
+"nalla"             { return NALLA; }
 "sahi"              { return TRUE; }
 "galat"             { return FALSE; }
 
@@ -31,15 +32,17 @@ STRING  \"[^\"]*\"
 "-="                { return SUB_EQ; }
 "*="                { return MUL_EQ; }
 "/="                { return DIV_EQ; }
-"+"                 { return ADD; }
-"-"                 { return SUB; }
-"*"                 { return MUL; }
-"/"                 { return DIV; }
 
 "=="                { return EQ; }
 "!="                { return NE; }
 "<="                { return LE; }
 ">="                { return GE; }
+
+"+"                 { return ADD; }
+"-"                 { return SUB; }
+"*"                 { return MUL; }
+"/"                 { return DIV; }
+
 "<"                 { return LT; }
 ">"                 { return GT; }
 "="                 { return ASSIGN; }
@@ -54,15 +57,15 @@ STRING  \"[^\"]*\"
 {DIGIT}             { return DIGIT; }
 {ID}                { return ID; }
 
-[ \t\n]+            { /* ignore whitespace */ }
-.                   { printf("Unknown: %s\n", yytext); }
-%%
+[ \t\n]+            ;
 
-int yywrap(){
-    return 1;
+. {
+    printf("Unknown token: %s\n", yytext);
+    return 0;
 }
 
-int main(){
-    yylex();
-    return 0;
+%%
+
+int yywrap(void) {
+    return 1;
 }

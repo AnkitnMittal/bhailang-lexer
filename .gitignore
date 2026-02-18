@@ -1,5 +1,9 @@
 # Flex generated file
-lex.yy.c
+*.yy.c
+
+# Bison generated file
+*.tab.c
+*.tab.h
 
 # Compiled binaries
 bhailang

@@ -10,11 +10,17 @@
 %token DECLARE PRINT
 %token WHILE IF ELSE_IF ELSE
 %token CONTINUE BREAK
-%token NULL TRUE FALSE
+%token NALLA TRUE FALSE
 %token PLUS_EQ SUB_EQ MUL_EQ DIV_EQ ADD SUB MUL DIV
 %token EQ NE LE GE LT GT ASSIGN
 %token LPAREN RPAREN LBRACE RBRACE SEMICOLON
 %token STRING DIGIT ID
+
+%left EQ NE LT GT LE GE
+%left ADD SUB
+%left MUL DIV
+%right ASSIGN
+%right PLUS_EQ SUB_EQ MUL_EQ DIV_EQ
 
 %%
 
@@ -23,25 +29,30 @@ program:
     ;
 
 statements:
-    statement statements
+      statements statement
     | statement
     ;
 
 statement:
-    varDecl
-    | assignment
-    | output
+      varDecl SEMICOLON
+    | assignment SEMICOLON
+    | output SEMICOLON
     | condition
     | loop
-    | expression
-    ;
-
-assignment:
-    ID ASSIGN expression
+    | CONTINUE SEMICOLON
+    | BREAK SEMICOLON
     ;
 
 varDecl:
-    DECLARE identifier ASSIGN expression
+    DECLARE ID ASSIGN expression
+    ;
+
+assignment:
+      ID ASSIGN expression
+    | ID PLUS_EQ expression
+    | ID SUB_EQ expression
+    | ID MUL_EQ expression
+    | ID DIV_EQ expression
     ;
 
 output:
@@ -49,45 +60,44 @@ output:
     ;
 
 condition:
-    IF LPAREN expression RPAREN LBRACE statements RBRACE
-    ;
+    IF LPAREN expression RPAREN LBRACE statements RBRACE elsePart
+;
+
+elsePart:
+    
+    | ELSE LBRACE statements RBRACE
+    | ELSE_IF LPAREN expression RPAREN LBRACE statements RBRACE elsePart
+;
 
 loop:
     WHILE LPAREN expression RPAREN LBRACE statements RBRACE
     ;
 
 expression:
-    literal
-    | identifier
-    | binaryExpr
-    | TRUE
-    | FALSE
-    | NULL
+      expression binary_op expression
+    | LPAREN expression RPAREN
+    | literal
+    | ID
     ;
 
 literal:
-    DIGIT
+      DIGIT
     | STRING
+    | TRUE
+    | FALSE
+    | NALLA
     ;
 
-identifier:
-    ID
-    ;
-
-binaryExpr:
-    expression operator expression
-    ;
-
-operator:
-    PLUS_EQ | SUB_EQ | MUL_EQ | DIV_EQ
-    | ADD | SUB | MUL | DIV
-    | EQ | NE | LE | GE | LT | GT
+binary_op:
+      ADD | SUB | MUL | DIV
+    | EQ  | NE  | LT  | GT
+    | LE  | GE
     ;
 
 %%
 
 void yyerror(const char *s) {
-    fprintf(stderr, "%s\n", s);
+    fprintf(stderr, "Syntax Error: %s\n", s);
 }
 
 int main(void) {
