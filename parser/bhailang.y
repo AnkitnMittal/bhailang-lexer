@@ -74,24 +74,23 @@ loop:
     ;
 
 expression:
-      expression binary_op expression
+      expression ADD expression
+    | expression SUB expression
+    | expression MUL expression
+    | expression DIV expression
+    | expression EQ expression
+    | expression NE expression
+    | expression LT expression
+    | expression GT expression
+    | expression LE expression
+    | expression GE expression
     | LPAREN expression RPAREN
-    | literal
-    | ID
-    ;
-
-literal:
-      DIGIT
+    | DIGIT
     | STRING
+    | ID
     | TRUE
     | FALSE
     | NALLA
-    ;
-
-binary_op:
-      ADD | SUB | MUL | DIV
-    | EQ  | NE  | LT  | GT
-    | LE  | GE
     ;
 
 %%
