@@ -2,9 +2,8 @@
     #include <stdio.h>
     #include <stdlib.h>
 
-    void yyeerror(char *);
     int yylex(void);
-    #include "y.tab.h"
+    void yyerror(const char *);
 %}
 
 %token HI BYE
@@ -50,12 +49,7 @@ output:
     ;
 
 condition:
-    IF LPAREN expression RPAREN LBRACE statements RBRACE elseBlock
-    ;
-
-elseBlock:
-    ELSE LBRACE statements RBRACE
-    |
+    IF LPAREN expression RPAREN LBRACE statements RBRACE
     ;
 
 loop:
@@ -92,11 +86,10 @@ operator:
 
 %%
 
-void yyerror(char *s) {
+void yyerror(const char *s) {
     fprintf(stderr, "%s\n", s);
 }
 
 int main(void) {
-    yyparse();
-    return 0;
+    return yyparse();
 }
