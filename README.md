@@ -1,27 +1,33 @@
-# Bhailang Lexer (Flex)
-A lexical analyzer for **Bhailang** implemented using **Flex**.  
-This project tokenizes Bhailang source code into keywords, identifiers, literals, operators, and symbols as a first step toward building a compiler or interpreter.
+# Bhailang Lexer (Flex + Bison)
+A simple BhaiLang compiler front-end built using Flex (Lexer) and Bison (Parser).
+It tokenizes and parses BhaiLang source code as the first step toward building a compiler or interpreter.
 
----
 ## Features
 - Recognizes Bhailang keywords (`hi bhai`, `bol bhai`, `jab tak bhai`, etc.)
 - Supports identifiers, numbers, strings
 - Handles arithmetic and relational operators
+- Performs syntax validation using Bison
 - Ignores whitespace and reports invalid tokens
-- Easily extendable with Bison/YACC
 
----
 ## Prerequisites
 - Flex
+- Bison
 - GCC
+
 ### Install (Ubuntu/Debian)
 ```bash
-sudo apt install flex gcc
+sudo apt install flex bison gcc
 ```
-### Build & Run
-Generated files (`lex.yy.c`, binaries) are ignored via `.gitignore`
+
+### Build Binaries
+Generated files (`lex.yy.c`, `bhailang.tab.c`, `bhailang.tab.h`) are ignored via `.gitignore`
 ```bash
-flex bhailang.l
-gcc lex.yy.c -o bhailang
-../lexer/bhailang < test.bhai
+bison -d parser/bhailang.y -o parser/bhailang.tab.c
+flex -o lexer/lex.yy.c lexer/bhailang.l
+gcc parser/bhailang.tab.c lexer/lex.yy.c -lfl -o bhailang
+```
+
+### Run
+```bash
+./bhailang < test/sample.bhai
 ```
